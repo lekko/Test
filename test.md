@@ -53,3 +53,20 @@ instead.
 [1]: https://enterprise.github.com
 [2]: docs/requirements.md#github-enterprise-version-requirements
 [3]: https://enterprise.github.com/support/
+
+```mermaid
+sequenceDiagram
+    participant C as checkDependence
+    participant S as statusMap
+    participant E as Error
+    participant W as Wait
+
+    C ->> S: 检查依赖状态
+    alt 存在自依赖
+        C ->> E: 返回循环依赖错误
+    else 强依赖缺失
+        C ->> E: 返回依赖缺失错误
+    else 依赖未就绪
+        C ->> W: 返回等待信号
+    end
+```
